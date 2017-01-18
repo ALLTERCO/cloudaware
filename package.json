@@ -1,14 +1,15 @@
 {
   "name": "cloudaware",
   "version": "0.0.1",
-  "description": "A module to try and figure out instance IP-s",
+  "description": "A module to try and figure out instance IP-s and metadata",
   "main": "index.js",
   "scripts": {
     "test": "nodejs example.js"
   },
   "keywords": [
     "cloud",
-    "ip"
+    "ip",
+    "metadata"
   ],
   "author": "Stoian Ivanov <s.ivanov at allterco com>",
   "license": "LGPL-3.0"
