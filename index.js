@@ -44,14 +44,21 @@ function populate_cache() {
 	if (detect_change_and_set('localips',get_localips())) change=true;
 	if (detect_change_and_set('extip',cached_result.tech_helper.get_extip(cached_result))) change=true;
 	if (detect_change_and_set_obj('metadata',cached_result.tech_helper.get_metadata(cached_result))) change=true;
+	if (detect_change_and_set('instance_nm',cached_result.tech_helper.instance_nm(cached_result))) change=true;
 	
 	
 	return change;
 }
+function update_dns(name,ip,ttl){
+	if (!cached_result.tech_helper || !cached_result.tech_helper.update_dns) return false;
+	return cached_result.tech_helper.update_dns(cached_result,name,ip,ttl);
+}
+
 module.exports=function(options){
 	if ( (!options || !options.recheck ) && cached_result) return cached_result;
-	
 	if (!cached_result) cached_result = new EventEmitter ();
+
+	cached_result.update_dns=update_dns;
 	
 	if (populate_cache()) cached_result.emit('change');
 	return cached_result;
