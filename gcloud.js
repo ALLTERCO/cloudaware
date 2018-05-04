@@ -18,6 +18,11 @@ module.exports={
 			gcloud_bin='/usr/lib/google-cloud-sdk/bin/gcloud';
 			return true;
 		}
+		//the new "proper" location
+		if (fs.existsSync('/snap/bin/gcloud')) {
+			gcloud_bin='/snap/bin/gcloud';
+			return true;
+		}
 		
 		//just to make sure..
 		if (fs.existsSync('/usr/bin/gcloud')) {
