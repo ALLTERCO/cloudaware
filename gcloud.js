@@ -111,7 +111,7 @@ module.exports={
 			var cur_extips='';
 			for (let rip of r.rrdatas) {
 				cur_extips=(cur_extips==''?'':cur_extips+' ')+"'"+rip+"'";
-				if (ip==rip) { //no update needed!
+				if (ip==rip && ttl==r.ttl) { //no update needed!
 					return true;
 				}
 			}
