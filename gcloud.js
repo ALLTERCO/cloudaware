@@ -91,10 +91,26 @@ module.exports={
 	get_zonename(domain) {
 		if (domain[domain.length-1]!='.') domain=domain+'.';
 		this.get_zones_data();
-		for (let zone of zones) if (zone.dnsName==domain) return zone.name;
-		return undefined;
+		let bestzone=undefined;
+		let bestzdnsname=undefined;
+		for (let zone of zones) {
+			if (zone.dnsName==domain) return zone.name;
+			if (domain.endsWith('.'+zone.dnsName)) {
+				if (bestzone===undefined) {
+					bestzone=zone.name;
+					bestzdnsname=zone.dnsName;
+				} else {
+					if (zone.dnsName>bestzdnsname){
+						bestzone=zone.name;
+						bestzdnsname=zone.dnsName;
+					}
+				}
+			}
+		}
+
+		return bestzone;
 	},
-	
+
 	update_dns:function(info,name,ip,ttl) {
 		let parts=name.split('.');
 		if (parts.length<2) return false;
@@ -112,24 +128,29 @@ module.exports={
 			for (let rip of r.rrdatas) {
 				cur_extips=(cur_extips==''?'':cur_extips+' ')+"'"+rip+"'";
 				if (ip==rip && ttl==r.ttl) { //no update needed!
+					console.log("update_dns no update needed!");
 					return true;
 				}
 			}
 			//no ip match must update:
-			cp.execSync(
+			let script=
 				gcloud_bin+" dns record-sets transaction start   '-z="+zone+"' ; "+
 				gcloud_bin+" dns record-sets transaction remove  '-z="+zone+"' '--name="+name+"' --type=A --ttl="+r.ttl+" "+cur_extips+" ; "+
 				gcloud_bin+" dns record-sets transaction add     '-z="+zone+"' '--name="+name+"' --type=A --ttl="+ttl+" '"+ip+"' ; "+
 				gcloud_bin+" dns record-sets transaction execute '-z="+zone+"' "
-			);
+			;
+			//console.log("update_dns update script:"+script);
+			cp.execSync(script);
 			return true;
 		}
 		//pure create
-		cp.execSync(
+		let script=
 			gcloud_bin+" dns record-sets transaction start   '-z="+zone+"' ; "+
 			gcloud_bin+" dns record-sets transaction add     '-z="+zone+"' '--name="+name+"' --type=A --ttl="+ttl+" '"+ip+"' ; "+
 			gcloud_bin+" dns record-sets transaction execute '-z="+zone+"' "
-		);
+		;
+		//console.log("update_dns create script:"+script);
+		cp.execSync(script);
 		return true;
 	}
 }

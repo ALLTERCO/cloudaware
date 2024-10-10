@@ -41,12 +41,16 @@ function populate_cache() {
 		return change;
 	}
 	cached_result.tech_helper=helpers[cached_result.cloudtech];
-	if (detect_change_and_set('localips',get_localips())) change=true;
+	let localips = get_localips();
+	if (detect_change_and_set('localips',get_localips())) {
+		detect_change_and_set('localip',localips[0])
+		change=true;
+	}
 	if (detect_change_and_set('extip',cached_result.tech_helper.get_extip(cached_result))) change=true;
 	if (detect_change_and_set_obj('metadata',cached_result.tech_helper.get_metadata(cached_result))) change=true;
 	if (detect_change_and_set('instance_nm',cached_result.tech_helper.instance_nm(cached_result))) change=true;
-	
-	
+
+
 	return change;
 }
 function update_dns(name,ip,ttl){
