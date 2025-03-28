@@ -39,7 +39,7 @@ module.exports={
 	get_inst_data:function(info){
 		if (inst_data) return inst_data;
 		if (!info.localips || !(info.localips instanceof Array)) return undefined;
-		let inst=cp.execSync(gcloud_bin+" --format=json  compute instances list").toString();
+		let inst=cp.execSync(gcloud_bin+" --format=json  compute instances list",{maxBuffer:2000000}).toString();
 		
 		inst=JSON.parse(inst);
 		for (let i of inst) {
