@@ -213,7 +213,11 @@ export function update_dns(this:cloudaware_t, name:string,ip:string,ttl:number|u
 	if (!zone) return false;
 	console.log("update_dns: name:"+name+" selected zone:",zone);
 	if (ttl===undefined) ttl=300;
-
+	try {
+		fs.unlinkSync('transaction.yaml');
+	} catch (e){
+		//ignore
+	}
 	if (name[name.length-1]!='.') name=name+'.';
 	let dns_records=JSON.parse(cp.execSync(gcloud_bin+" --format=json dns  record-sets  list --filter='type=\"A\" AND kind=\"dns#resourceRecordSet\"' '--zone="+zone+"'",{maxBuffer:20000000}).toString());
 	if (!Array.isArray(dns_records)) return false;
