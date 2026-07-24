@@ -1,7 +1,7 @@
 
 import  cp from  'child_process';
 import  fs from 'fs';
-import { cloudaware_t, RemoveIndex } from './types.mjs';
+import type { cloudaware_t, RemoveIndex } from './types.mts';
 
 let aliyun_bin='N/A';
 export const tech_name='aliyun';

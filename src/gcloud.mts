@@ -1,7 +1,7 @@
 
 import  cp from  'child_process';
 import  fs from 'fs';
-import { cloudaware_t } from './types.mjs';
+import type { cloudaware_t } from './types.mts';
 
 let gcloud_bin='N/A';
 export const tech_name='gcloud';

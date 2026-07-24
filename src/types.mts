@@ -1,5 +1,5 @@
-import { gcloud_inst_data_t } from "./gcloud.mjs";
-import { aliyun_inst_data_t } from "./aliyun.mjs";
+import type { gcloud_inst_data_t } from "./gcloud.mts";
+import type { aliyun_inst_data_t } from "./aliyun.mts";
 
 export interface cloudaware_t{
 	cloudtech:string;

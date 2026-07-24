@@ -1,6 +1,6 @@
 import cp from 'child_process';
 
-import {cloudaware_t} from './types.mjs'
+import type {cloudaware_t} from './types.mts'
 import {
 	detect as gcloud_detect,
 	get_inst_data as gcloud_get_inst_data,
@@ -24,7 +24,7 @@ import {
 
 
 function get_localips():string[]{
-	let res=cp.execSync("ip -o -4   addr show up  |grep -o  'inet [^/]*' | cut -f2 -d' ' | fgrep -v 127.0.0.1").toString("utf-8");
+	let res=cp.execSync("ip -o -4   addr show up  |grep -o  'inet [^/]*' | cut -f2 -d' ' | grep -F -v 127.0.0.1").toString("utf-8");
 
 	return res.substring(0,res.length-1).split("\n");
 

@@ -16,7 +16,7 @@
   "type": "module",
   "license": "LGPL-3.0",
   "devDependencies": {
-    "typescript": "^5.8.2",
-    "@types/node": "^22.13.14"
+    "typescript": "^7.0.2",
+    "@types/node": "^24.13.3"
   }
 }

@@ -6,7 +6,7 @@ if (ca.metadata.cloud_domain) {
 	ca.update_dns(ca.instance_nm+'.'+ca.metadata.cloud_domain,ca.extip);
 }
 */
-import {cloudaware_init} from './index.mjs';
+import {cloudaware_init} from './index.mts';
 let inst=cloudaware_init(['172.31.100.143']);
 if (inst==undefined){
 	console.error("failed to init any tech?!")
