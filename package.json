@@ -8,6 +8,9 @@
     "ip",
     "metadata"
   ],
+  "scripts":{
+	"build":"tsc"
+  },
 
   "author": "Stoian Ivanov <s.ivanov at allterco com>",
   "type": "module",
